@@ -1,0 +1,92 @@
+import java.util.Scanner;
+
+public class SistemaReservaAviao {
+    private boolean[][] assentos;
+    private int totalAssentos;
+    private int assentosOcupados;
+
+    public SistemaReservaAviao(int fileiras, int colunas) {
+        this.assentos = new boolean[fileiras][colunas];
+        this.totalAssentos = fileiras * colunas;
+        this.assentosOcupados = 0;
+    }
+
+    public void reservarAssento(int fileira, int coluna) {
+        if (!assentos[fileira][coluna]) {
+            assentos[fileira][coluna] = true;
+            assentosOcupados++;
+            System.out.println("Assento reservado com sucesso.");
+        } else {
+            System.out.println("Desculpe, o assento já está ocupado.");
+        }
+    }
+
+    public void listarAssentosOcupados() {
+        System.out.println("Lista de assentos ocupados:");
+        for (int i = 0; i < assentos.length; i++) {
+            for (int j = 0; j < assentos[0].length; j++) {
+                if (assentos[i][j]) {
+                    System.out.println("Fileira: " + i + ", Coluna: " + j);
+                }
+            }
+        }
+    }
+
+    public void listarAssentosDisponiveis() {
+        System.out.println("Lista de assentos disponíveis:");
+        for (int i = 0; i < assentos.length; i++) {
+            for (int j = 0; j < assentos[0].length; j++) {
+                if (!assentos[i][j]) {
+                    System.out.println("Fileira: " + i + ", Coluna: " + j);
+                }
+            }
+        }
+    }
+
+    public void mostrarPercentualOcupacao() {
+        double percentualOcupacao = ((double) assentosOcupados / totalAssentos) * 100;
+        System.out.println("Percentual de ocupação: " + percentualOcupacao + "%");
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Criar um avião com 12 fileiras e 4 colunas
+        SistemaReservaAviao aviao = new SistemaReservaAviao(12, 4);
+
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Reservar um assento");
+            System.out.println("2. Listar assentos ocupados");
+            System.out.println("3. Listar assentos disponíveis");
+            System.out.println("4. Mostrar percentual de ocupação");
+            System.out.println("5. Sair");
+            System.out.print("Escolha uma opção: ");
+            int escolha = scanner.nextInt();
+
+            switch (escolha) {
+                case 1:
+                    System.out.print("Informe o número da fileira: ");
+                    int fileira = scanner.nextInt();
+                    System.out.print("Informe o número da coluna: ");
+                    int coluna = scanner.nextInt();
+                    aviao.reservarAssento(fileira, coluna);
+                    break;
+                case 2:
+                    aviao.listarAssentosOcupados();
+                    break;
+                case 3:
+                    aviao.listarAssentosDisponiveis();
+                    break;
+                case 4:
+                    aviao.mostrarPercentualOcupacao();
+                    break;
+                case 5:
+                    System.out.println("Encerrando o programa...");
+                    System.exit(0);
+                default:
+                    System.out.println("Escolha inválida. Por favor, escolha um número entre 1 e 5.");
+            }
+        }
+    }
+}
